@@ -1,0 +1,23 @@
+[package]
+name = "skillguard-registry"
+description = "Git-based skill registry client for SkillGuard"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+skillguard-core = { workspace = true }
+skillguard-signing = { workspace = true }
+gix = { workspace = true }
+reqwest = { workspace = true }
+sha2 = { workspace = true }
+tar = { workspace = true }
+flate2 = { workspace = true }
+semver = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tempfile = "3.0"

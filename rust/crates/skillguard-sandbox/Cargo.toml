@@ -1,0 +1,16 @@
+[package]
+name = "skillguard-sandbox"
+description = "Wasmtime WASI sandbox for SkillGuard skill execution"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+skillguard-core = { workspace = true }
+wasmtime = { workspace = true }
+wasmtime-wasi = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }

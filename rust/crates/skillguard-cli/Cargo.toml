@@ -1,0 +1,32 @@
+[package]
+name = "skillguard-cli"
+description = "CLI binary for SkillGuard"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "skillguard"
+path = "src/main.rs"
+
+[dependencies]
+skillguard-core = { workspace = true }
+skillguard-sandbox = { workspace = true }
+skillguard-signing = { workspace = true }
+skillguard-registry = { workspace = true }
+clap = { workspace = true }
+colored = { workspace = true }
+indicatif = { workspace = true }
+comfy-table = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde_yaml = { workspace = true }
+tokio = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+sha2 = { workspace = true }
+tar = { workspace = true }
+flate2 = { workspace = true }
+semver = { workspace = true }
+regex = { workspace = true }
