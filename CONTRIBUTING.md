@@ -10,27 +10,51 @@ By participating in this project, you agree to maintain a respectful and inclusi
 
 ### Prerequisites
 
-- Python 3.11+
-- [uv](https://github.com/astral-sh/uv) for package management
+- [Rust](https://rustup.rs/) (stable toolchain)
+- Python 3.11+ (for the thin Python SDK, optional)
 
 ### Development Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/skillguard/skillguard.git
-cd skillguard
+git clone https://github.com/ipriyaaanshu/agents.git
+cd agents
 
-# Install dependencies
-uv sync --all-extras
+# Build the Rust workspace
+cd rust
+cargo build
 
 # Run tests
-uv run pytest
+cargo test --workspace
 
 # Run linting
-uv run ruff check .
+cargo clippy --workspace --all-targets -- -D warnings
 
-# Run type checking
-uv run mypy src/
+# Check formatting
+cargo fmt --all -- --check
+```
+
+### Python SDK (optional)
+
+```bash
+cd rust/sdk/python
+pip install -e ".[all]"
+```
+
+## Project Structure
+
+```
+agents/
+├── rust/                          # Rust workspace (primary implementation)
+│   ├── crates/
+│   │   ├── skillguard-core/       # Types, manifest, validation
+│   │   ├── skillguard-sandbox/    # Wasmtime WASI sandbox
+│   │   ├── skillguard-signing/    # Sigstore signing + SLSA provenance
+│   │   ├── skillguard-registry/   # Git-based registry client
+│   │   └── skillguard-cli/        # CLI binary (clap)
+│   └── sdk/python/                # Thin Python SDK (delegates to CLI)
+├── skills/                        # Example skills
+└── .github/workflows/             # CI/CD
 ```
 
 ## Types of Contributions
@@ -42,7 +66,7 @@ When filing a bug report, please include:
 - A clear description of the issue
 - Steps to reproduce
 - Expected vs actual behavior
-- Your environment (Python version, OS, etc.)
+- Your environment (OS, Rust version, etc.)
 
 ### 2. Feature Requests
 
@@ -65,45 +89,31 @@ Contributing new skills is one of the best ways to help! When creating a skill:
 
 #### Core Contributions
 
-For changes to the SDK, CLI, or other core components:
+For changes to the Rust crates, CLI, or Python SDK:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
 4. Add tests for new functionality
-5. Ensure all tests pass (`uv run pytest`)
-6. Ensure linting passes (`uv run ruff check .`)
-7. Commit your changes (`git commit -m 'Add amazing feature'`)
-8. Push to the branch (`git push origin feature/amazing-feature`)
-9. Open a Pull Request
+5. Ensure all tests pass (`cargo test --workspace`)
+6. Ensure clippy passes (`cargo clippy --workspace --all-targets -- -D warnings`)
+7. Ensure formatting passes (`cargo fmt --all -- --check`)
+8. Commit your changes (`git commit -m 'Add amazing feature'`)
+9. Push to the branch (`git push origin feature/amazing-feature`)
+10. Open a Pull Request
 
 ## Code Style
 
-We use:
+### Rust
 
-- **ruff** for linting and formatting
-- **mypy** for type checking
-- **Google-style docstrings**
+- `cargo fmt` for formatting
+- `cargo clippy` with `-D warnings` for linting
+- Doc comments on all public items
 
-### Example
+### Python SDK
 
-```python
-def fetch_skill(name: str, version: str | None = None) -> Skill:
-    """Fetch a skill from the registry.
-    
-    Args:
-        name: The skill name.
-        version: Optional version constraint. Defaults to latest.
-        
-    Returns:
-        The loaded Skill instance.
-        
-    Raises:
-        SkillNotFoundError: If the skill doesn't exist.
-        VerificationError: If signature verification fails.
-    """
-    ...
-```
+- Type hints on all functions
+- Keep the SDK thin — delegate to the CLI binary
 
 ## Security
 
@@ -111,14 +121,14 @@ Security is core to SkillGuard. When contributing:
 
 - **Never bypass sandbox checks** in skill implementations
 - **Minimize permissions** in skill manifests
-- **Report security issues privately** to security@skillguard.dev
+- **Report security issues privately** via GitHub Security Advisories
 - **Don't commit secrets** or credentials
 
 ### Security Review Process
 
 All skill contributions undergo security review:
 
-1. Automated static analysis
+1. Automated static analysis (`skillguard audit`)
 2. Permission level assessment
 3. Manual code review for high-permission skills
 
@@ -134,32 +144,26 @@ All skill contributions undergo security review:
 
 - [ ] Tests added/updated
 - [ ] Documentation updated
-- [ ] Linting passes
-- [ ] Type checking passes
-- [ ] Changelog entry added (if applicable)
+- [ ] `cargo clippy` passes with `-D warnings`
+- [ ] `cargo fmt` passes
+- [ ] `cargo test --workspace` passes
 
 ## Skill Publishing
 
 To publish a skill to the official registry:
 
 1. Ensure your skill follows all guidelines
-2. Submit a PR to `skillguard/registry`
-3. Pass security review
-4. Sign with your verified identity
+2. Run `skillguard audit` and resolve all issues
+3. Build with `skillguard build --sign`
+4. Publish with `skillguard publish`
 
 ### Skill Guidelines
 
 - **Clear purpose** - One skill, one responsibility
 - **Minimal permissions** - Least privilege principle
-- **Good documentation** - README with examples
+- **Good documentation** - Clear action descriptions and parameter schemas
 - **Comprehensive tests** - Edge cases covered
 - **Semantic versioning** - Follow semver
-
-## Questions?
-
-- Open a [Discussion](https://github.com/skillguard/skillguard/discussions)
-- Join our [Discord](https://discord.gg/skillguard)
-- Email: hello@skillguard.dev
 
 ## License
 

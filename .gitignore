@@ -55,6 +55,10 @@ dmypy.json
 *.tar.gz
 *.whl
 
+# Rust
+target/
+export-anthropic/
+
 # SkillGuard specific
 .skillguard/
 *.provenance.json

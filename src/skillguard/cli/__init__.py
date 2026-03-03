@@ -1,1 +1,0 @@
-"""SkillGuard CLI."""
