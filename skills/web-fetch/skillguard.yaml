@@ -1,0 +1,74 @@
+name: web-fetch
+version: 1.0.0
+description: Fetch and parse web content securely
+author: skillguard-official
+license: Apache-2.0
+
+permissions:
+  network:
+    - domain: "*"
+      methods: [GET, HEAD]
+      ports: [443, 80]
+  filesystem:
+    - path: "${TEMP}/**"
+      access: [read, write]
+  subprocess: false
+
+adapters:
+  openclaw: ">=2.0"
+  langchain: ">=0.3"
+  mcp: ">=1.0"
+
+build:
+  reproducible: true
+  base: "skillguard/python:3.11-minimal"
+  dependencies:
+    - httpx>=0.27.0
+    - beautifulsoup4>=4.12.0
+
+security:
+  slsa_level: 3
+
+actions:
+  - name: fetch
+    description: Fetch content from a URL
+    parameters:
+      url:
+        type: string
+        description: URL to fetch
+      headers:
+        type: object
+        description: Optional HTTP headers
+    returns:
+      type: object
+      description: Response with status, headers, and content
+
+  - name: fetch_json
+    description: Fetch and parse JSON from a URL
+    parameters:
+      url:
+        type: string
+        description: URL to fetch
+    returns:
+      type: object
+      description: Parsed JSON data
+
+  - name: extract_text
+    description: Fetch URL and extract readable text
+    parameters:
+      url:
+        type: string
+        description: URL to fetch
+      selector:
+        type: string
+        description: Optional CSS selector to extract specific content
+    returns:
+      type: string
+      description: Extracted text content
+
+keywords:
+  - web
+  - fetch
+  - http
+  - scrape
+  - api
