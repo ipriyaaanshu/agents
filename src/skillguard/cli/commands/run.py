@@ -5,7 +5,6 @@ from pathlib import Path
 
 from rich.console import Console
 from rich.panel import Panel
-from rich.syntax import Syntax
 
 from skillguard.sdk.manifest import SkillManifest
 from skillguard.sdk.sandbox import Sandbox, SandboxConfig
@@ -80,6 +79,10 @@ def run_skill(skill: str, action: str, params: str | None, dry_run: bool) -> Non
                 return
 
             spec = importlib.util.spec_from_file_location("skill", skill_py)
+            if spec is None or spec.loader is None:
+                console.print(f"[red]Failed to load skill module: {skill_py}[/red]")
+                return
+
             module = importlib.util.module_from_spec(spec)
 
             import sys
@@ -124,17 +127,12 @@ def run_skill(skill: str, action: str, params: str | None, dry_run: bool) -> Non
             raise
 
 
-def format_result(data) -> str:
+def format_result(data: object) -> str:
     """Format result data for display."""
     if data is None:
         return "[dim]No data returned[/dim]"
 
     if isinstance(data, (dict, list)):
-        return Syntax(
-            json.dumps(data, indent=2),
-            "json",
-            theme="monokai",
-            word_wrap=True,
-        ).__rich__()
+        return json.dumps(data, indent=2)
 
     return str(data)

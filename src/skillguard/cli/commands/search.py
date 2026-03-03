@@ -1,11 +1,13 @@
 """Search for skills in the registry."""
 
+from typing import Any
+
 from rich.console import Console
 from rich.table import Table
 
 console = Console()
 
-MOCK_SKILLS = [
+MOCK_SKILLS: list[dict[str, Any]] = [
     {
         "name": "github-ops",
         "version": "1.2.0",

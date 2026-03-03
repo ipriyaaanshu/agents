@@ -1,6 +1,7 @@
 """Initialize a new skill project."""
 
 from pathlib import Path
+from typing import Any
 
 from rich.console import Console
 from rich.panel import Panel
@@ -18,7 +19,7 @@ from skillguard.sdk.manifest import (
 
 console = Console()
 
-TEMPLATES = {
+TEMPLATES: dict[str, dict[str, Any]] = {
     "basic": {
         "description": "A basic skill template",
         "permissions": Permission(),

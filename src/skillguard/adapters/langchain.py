@@ -23,6 +23,9 @@ def _load_skill_from_path(skill_path: Path) -> Skill:
         raise FileNotFoundError(f"No skill.py in {skill_path}")
 
     spec = importlib.util.spec_from_file_location("skill", skill_py)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Failed to load skill module: {skill_py}")
+
     module = importlib.util.module_from_spec(spec)
 
     old_path = sys.path.copy()
@@ -31,7 +34,8 @@ def _load_skill_from_path(skill_path: Path) -> Skill:
     try:
         spec.loader.exec_module(module)
         if hasattr(module, "create_skill"):
-            return module.create_skill()
+            skill = module.create_skill()
+            return skill  # type: ignore[no-any-return]
         raise AttributeError("Skill has no create_skill() function")
     finally:
         sys.path = old_path

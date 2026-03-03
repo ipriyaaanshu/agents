@@ -27,7 +27,7 @@ def verify_skill(skill: str, strict: bool) -> None:
             version = "latest"
             skill_path = None
 
-    checks = []
+    checks: list[tuple[str, bool | None, str | None]] = []
     all_passed = True
     warnings = []
 

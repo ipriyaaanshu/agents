@@ -131,11 +131,11 @@ class FunctionSkill(Skill[T]):
 
     def __init__(self, manifest: SkillManifest) -> None:
         super().__init__(manifest)
-        self._actions: dict[str, callable] = {}
+        self._actions: dict[str, Any] = {}
 
-    def register_action(self, name: str):
+    def register_action(self, name: str) -> Any:
         """Decorator to register an action handler."""
-        def decorator(func: callable) -> callable:
+        def decorator(func: Any) -> Any:
             self._actions[name] = func
             return func
         return decorator

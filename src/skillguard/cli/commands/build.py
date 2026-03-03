@@ -166,8 +166,9 @@ def sign_package(_package_path: Path) -> str | None:
         return None
 
 
-def format_size(size: int) -> str:
+def format_size(size_bytes: int) -> str:
     """Format a file size in human-readable form."""
+    size = float(size_bytes)
     for unit in ["B", "KB", "MB", "GB"]:
         if size < 1024:
             return f"{size:.1f} {unit}"

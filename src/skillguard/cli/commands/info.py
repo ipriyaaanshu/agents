@@ -59,30 +59,30 @@ def show_skill_info(skill: str) -> None:
 
     if manifest.permissions.network:
         console.print("\n[cyan]Network:[/cyan]")
-        for perm in manifest.permissions.network:
-            methods = ", ".join(m.value for m in perm.methods)
-            console.print(f"  • {perm.domain} [{methods}]")
+        for net_perm in manifest.permissions.network:
+            methods = ", ".join(m.value for m in net_perm.methods)
+            console.print(f"  • {net_perm.domain} [{methods}]")
     else:
         console.print("\n[cyan]Network:[/cyan] [dim]None[/dim]")
 
     if manifest.permissions.filesystem:
         console.print("\n[cyan]Filesystem:[/cyan]")
-        for perm in manifest.permissions.filesystem:
-            access = ", ".join(a.value for a in perm.access)
-            console.print(f"  • {perm.path} [{access}]")
+        for fs_perm in manifest.permissions.filesystem:
+            access = ", ".join(a.value for a in fs_perm.access)
+            console.print(f"  • {fs_perm.path} [{access}]")
     else:
         console.print("\n[cyan]Filesystem:[/cyan] [dim]None[/dim]")
 
     if manifest.permissions.environment:
         console.print("\n[cyan]Environment:[/cyan]")
-        for perm in manifest.permissions.environment:
-            flags = []
-            if perm.required:
+        for env_perm in manifest.permissions.environment:
+            flags: list[str] = []
+            if env_perm.required:
                 flags.append("required")
-            if perm.sensitive:
+            if env_perm.sensitive:
                 flags.append("sensitive")
             flag_str = f" ({', '.join(flags)})" if flags else ""
-            console.print(f"  • {perm.name}{flag_str}")
+            console.print(f"  • {env_perm.name}{flag_str}")
     else:
         console.print("\n[cyan]Environment:[/cyan] [dim]None[/dim]")
 

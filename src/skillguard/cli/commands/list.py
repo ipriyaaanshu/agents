@@ -1,6 +1,7 @@
 """List installed skills."""
 
 from pathlib import Path
+from typing import Any
 
 from rich.console import Console
 from rich.table import Table
@@ -22,7 +23,7 @@ def list_installed_skills(_installed_only: bool) -> None:
         console.print("\n[dim]Install skills with: skillguard install <name>[/dim]")
         return
 
-    skills = []
+    skills: list[dict[str, Any]] = []
     for skill_dir in SKILLS_DIR.iterdir():
         if not skill_dir.is_dir():
             continue

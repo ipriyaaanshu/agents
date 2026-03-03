@@ -260,8 +260,9 @@ class SkillManifest(BaseModel):
 
     def to_yaml_string(self) -> str:
         """Serialize the manifest to a YAML string."""
-        return yaml.dump(
+        result = yaml.dump(
             self.model_dump(exclude_none=True),
             default_flow_style=False,
             sort_keys=False,
         )
+        return str(result) if result else ""
