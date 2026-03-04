@@ -9,6 +9,14 @@
 [![Security](https://img.shields.io/badge/security-first-red.svg)](#security)
 [![Skills](https://img.shields.io/badge/skills-15-brightgreen.svg)](#official-skills-catalog)
 
+[![GitHub stars](https://img.shields.io/github/stars/skillguard/skillguard)](https://github.com/skillguard/skillguard/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/skillguard/skillguard)](https://github.com/skillguard/skillguard/network)
+[![GitHub commits](https://img.shields.io/github/commit-activity/t/skillguard/skillguard)](https://github.com/skillguard/skillguard/graphs/commit-activity)
+[![GitHub issues](https://img.shields.io/github/issues/skillguard/skillguard)](https://github.com/skillguard/skillguard/issues)
+[![Last commit](https://img.shields.io/github/last-commit/skillguard/skillguard)](https://github.com/skillguard/skillguard/commits)
+
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=skillguard&repo=skillguard&theme=github_dark&hide_border=true)](https://github.com/skillguard/skillguard)
+
 </div>
 
 ---
